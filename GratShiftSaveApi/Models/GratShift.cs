@@ -8,12 +8,13 @@ namespace ParksApi.Models
   {
     public int GratId { get; set; }
     [Required]
-    [StringLength(50)]
-    public string Name { get; set; }
+    public int CashTip { get; set; }
     [Required]
-    public string Location { get; set; }
+    public int CreditTip { get; set; }
     [Required]
-    public string Review { get; set; }
+    public int ShiftSales { get; set; }
+    [Required]
+    public DateTime ShiftDate { get; set; }
     [Required]
     [Range(0, 10, ErrorMessage = "Rating must be between 0 and 10.")]
     public int Rating { get; set; }
