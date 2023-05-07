@@ -1,6 +1,7 @@
 using GratShiftSaveApi.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -38,6 +39,7 @@ app.UseCors("corspolicy");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers()
