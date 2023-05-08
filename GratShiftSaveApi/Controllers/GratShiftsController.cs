@@ -8,32 +8,32 @@ namespace GratShiftSaveApiController.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class GratController : ControllerBase
+  public class GratShiftController : ControllerBase
   {
     private readonly GratShiftSaveApiContext _db;
 
-    public GratController(GratShiftSaveApiContext db)
+    public GratShiftController(GratShiftSaveApiContext db)
     {
       _db = db;
     }
 
     // Pagination Code:
     [HttpGet("page/{page}")]
-    public async Task<ActionResult<List<Park>>> GetPages(int page, int pageSize = 4)
+    public async Task<ActionResult<List<GratShift>>> GetPages(int page, int pageSize = 4)
     {
-        if (_db.Parks == null)
+        if (_db.GratShifts == null)
         return NotFound();
 
-      int pageCount = _db.Parks.Count();
+      int pageCount = _db.GratShifts.Count();
 
-      var parks = await _db.Parks
+      var gratShifts = await _db.GratShifts
         .Skip((page - 1) * pageSize)
         .Take(pageSize)
         .ToListAsync();
 
-      var response = new ParkResponse
+      var response = new GratShiftResponse
       {
-        Parks = parks,
+        GratShifts = gratShifts,
         //page number inside the url
         CurrentPage = page,
         //the amount of parks returned from the database
@@ -45,67 +45,67 @@ namespace GratShiftSaveApiController.Controllers
     }
 	
     [HttpGet]
-    public async Task<List<Park>> Get( string name, string location, string review, int rating)
+    public async Task<List<GratShift>> Get( int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
       
-      IQueryable<Park> query = _db.Parks.AsQueryable();
+      IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
 
-      if (name != null)
+      if (cashTip >= 0)
       {
-        query = query.Where(entry => entry.Name == name);
+        query = query.Where(entry => entry.CashTip == cashTip);
       }
 
-      if (location != null)
+      if (creditTip >= 0)
       {
-        query = query.Where(entry => entry.Location == location);
+        query = query.Where(entry => entry.CreditTip == creditTip);
       }
 
-      if (review != null)
+      if (shiftSales >= 0)
       {
-        query = query.Where(entry => entry.Review == review);
+        query = query.Where(entry => entry.ShiftSales == shiftSales);
       }
 
-      if (rating >= 0)
+      if (shiftDate != null)
       {
-        query = query.Where(entry => entry.Rating >= rating);
+        query = query.Where(entry => entry.ShiftDate >= shiftDate);
       }
 
       return await query.ToListAsync();
     }
 
-    //Get: api/Parks/1
+    //Get: api/GratShifts/1
     [HttpGet("{id}")]
-    public async Task<ActionResult<Park>> GetPark(int id)
+    public async Task<ActionResult<GratShift>> GetGratShift(int id)
     {
-      Park park = await _db.Parks.FindAsync(id);
+      GratShift gratShift = await _db.GratShifts.FindAsync(id);
 
-      if (park == null)
+      if (gratShift == null)
       {
         return NotFound();
       }
 
-      return Ok(park);
+      return Ok(gratShift);
     }
 
-    //POST api/parks
+    //POST api/GratShifts
     [HttpPost]
-    public async Task<ActionResult<Park>> Post(Park park)
+    public async Task<ActionResult<GratShift>> Post(GratShift gratShift)
     {
-      _db.Parks.Add(park);
+      _db.GratShifts.Add(gratShift);
       await _db.SaveChangesAsync();
-      return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
+      return CreatedAtAction(nameof(GetGratShift), new { id = gratShift.GratShiftId }, gratShift);
     }
 
-    //PUT: api/Parks/2
+    //PUT: api/GratShifts/2
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Park park)
+    public async Task<IActionResult> Put(int id, GratShift gratShift)
     {
-      if (id != park.ParkId)
+      if (id != gratShift.GratShiftId)
       {
         return BadRequest();
       }
 
-      _db.Parks.Update(park);
+      _db.GratShifts.Update(gratShift);
 
       try
       {
@@ -113,7 +113,7 @@ namespace GratShiftSaveApiController.Controllers
       }
       catch (DbUpdateConcurrencyException)
       {
-        if (!ParkExists(id))
+        if (!GratShiftExists(id))
         {
           return NotFound();
         }
@@ -125,47 +125,47 @@ namespace GratShiftSaveApiController.Controllers
       return NoContent();
     }
 
-    private bool ParkExists(int id)
+    private bool GratShiftExists(int id)
     {
-      return _db.Parks.Any(location => location.ParkId == id);
+      return _db.GratShifts.Any(location => location.GratShiftId == id);
     }
 
-    //DELETE: api/Parks/5
+    //DELETE: api/GratShifts/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePark(int id)
+    public async Task<IActionResult> DeleteGratShift(int id)
     {
-      Park park = await _db.Parks.FindAsync(id);
-      if (park == null)
+      GratShift gratShift = await _db.GratShifts.FindAsync(id);
+      if (gratShift == null)
       {
         return NotFound();
       }
 
-      _db.Parks.Remove(park);
+      _db.GratShifts.Remove(gratShift);
       await _db.SaveChangesAsync();
 
       return NoContent();
     }
 
-    // Random Park Endpoint
+    // Random GratShift Endpoint
     [HttpGet("random")]
-    public async Task<ActionResult<Park>> RandomPark()
+    public async Task<ActionResult<GratShift>> RandomGratShift()
     {
-      int parks = await _db.Parks.CountAsync();
+      int gratShifts = await _db.GratShifts.CountAsync();
       
-      if (parks == 0)
+      if (gratShifts == 0)
         {
           return NotFound();
         }
 
       var random = new Random();
-      int randoPark = random.Next(0, parks);
+      int randoShift = random.Next(0, gratShifts);
 
-      Park parkRandom = await _db.Parks
-        .OrderBy(park => park.ParkId)
-        .Skip(randoPark)
+      GratShift gratShiftRandom = await _db.GratShifts
+        .OrderBy(gratShift => gratShift.GratShiftId)
+        .Skip(randoShift)
         .FirstOrDefaultAsync();
 
-      return Ok(parkRandom);
+      return Ok(gratShiftRandom);
     }
   }
 }
