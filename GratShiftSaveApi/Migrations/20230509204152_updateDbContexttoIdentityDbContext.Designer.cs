@@ -3,6 +3,7 @@ using System;
 using GratShiftSaveApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GratShiftSaveApi.Migrations
 {
     [DbContext(typeof(GratShiftSaveApiContext))]
-    partial class GratShiftSaveApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230509204152_updateDbContexttoIdentityDbContext")]
+    partial class updateDbContexttoIdentityDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,16 +62,48 @@ namespace GratShiftSaveApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("GratShiftSaveApi.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "testing@email.com",
+                            Name = "TestUser",
+                            Password = "Password!1"
+                        });
+                });
+
             modelBuilder.Entity("GratShiftSaveApi.Models.UserLogin", b =>
                 {
-                    b.Property<string>("Username")
+                    b.Property<string>("Email")
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Username");
+                    b.HasKey("Email");
 
                     b.ToTable("UserLogins");
                 });

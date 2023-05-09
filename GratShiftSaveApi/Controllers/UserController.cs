@@ -33,14 +33,14 @@ namespace GratShiftSaveApiController.Controllers
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] UserLogin model)
     {
-      var user = await _userManager.FindByNameAsync(model.Email);
+      var user = await _userManager.FindByNameAsync(model.Username);
       if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
       {
         var userRoles = await _userManager.GetRolesAsync(user);
 
         var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -63,9 +63,9 @@ namespace GratShiftSaveApiController.Controllers
     [AllowAnonymous]
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register([FromBody] Register model)
+    public async Task<IActionResult> Register([FromBody] UserRegister model)
     {
-      var userExists = await _userManager.FindByNameAsync(model.Email);
+      var userExists = await _userManager.FindByNameAsync(model.Username);
       if (userExists != null)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "User already exists!" });
 
@@ -73,6 +73,7 @@ namespace GratShiftSaveApiController.Controllers
       {
         Email = model.Email,
         SecurityStamp = Guid.NewGuid().ToString(),
+        UserName = model.Username
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)
@@ -83,9 +84,9 @@ namespace GratShiftSaveApiController.Controllers
 
     [HttpPost]
     [Route("register-admin")]
-    public async Task<IActionResult> RegisterAdmin([FromBody] Register model)
+    public async Task<IActionResult> RegisterAdmin([FromBody] UserRegister model)
     {
-      var userExists = await _userManager.FindByNameAsync(model.Email);
+      var userExists = await _userManager.FindByNameAsync(model.Username);
       if (userExists != null)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "Account already exists with that email address." });
 
@@ -93,6 +94,7 @@ namespace GratShiftSaveApiController.Controllers
       {
         Email = model.Email,
         SecurityStamp = Guid.NewGuid().ToString(),
+        UserName = model.Username
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)
@@ -121,7 +123,7 @@ namespace GratShiftSaveApiController.Controllers
       var token = new JwtSecurityToken(
           issuer: _configuration["JWT:ValidIssuer"],
           audience: _configuration["JWT:ValidAudience"],
-          expires: DateTime.Now.AddHours(3),
+          expires: DateTime.Now.AddHours(12),
           claims: authClaims,
           signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
           );
