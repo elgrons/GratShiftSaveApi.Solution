@@ -60,6 +60,7 @@ namespace GratShiftSaveApiController.Controllers
       return Unauthorized();
     }
 
+    [AllowAnonymous]
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] Register model)

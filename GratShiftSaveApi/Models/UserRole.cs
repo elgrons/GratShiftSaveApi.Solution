@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GratShiftSaveApi.Models
 {
-  public class UserRole
+  public static class UserRole
   {
     // public int UserRoleId { get; set; }
     public const string Admin = "Admin";

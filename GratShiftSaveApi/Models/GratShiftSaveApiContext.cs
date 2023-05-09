@@ -10,6 +10,9 @@ namespace GratShiftSaveApi.Models
     public DbSet<User> Users { get; set; }
     public DbSet<UserLogin> UserLogins { get; set; }
     public DbSet<UserResponse> UserResponses { get; set; }
+    public DbSet<IdentityUser> IdentityUser { get; set; }
+    public DbSet<IdentityRole> IdentityRole { get; set; }
+
     // public DbSet<UserRole> UserRoles { get; set; }
     // public DbSet<Register> Registers { get; set; }
 
