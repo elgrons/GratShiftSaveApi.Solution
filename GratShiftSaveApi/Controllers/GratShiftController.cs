@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GratShiftSaveApi.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GratShiftSaveApiController.Controllers
-
 {
-  [Route("api/[controller]")]
+  // [Authorize(Roles = UserRole.Admin)]
   [ApiController]
+  [Route("api/[controller]")]
   public class GratShiftController : ControllerBase
   {
     private readonly GratShiftSaveApiContext _db;
@@ -16,36 +17,9 @@ namespace GratShiftSaveApiController.Controllers
     {
       _db = db;
     }
-
-    // Pagination Code:
-    [HttpGet("page/{page}")]
-    public async Task<ActionResult<List<GratShift>>> GetPages(int page, int pageSize = 4)
-    {
-        if (_db.GratShifts == null)
-        return NotFound();
-
-      int pageCount = _db.GratShifts.Count();
-
-      var gratShifts = await _db.GratShifts
-        .Skip((page - 1) * pageSize)
-        .Take(pageSize)
-        .ToListAsync();
-
-      var response = new GratShiftResponse
-      {
-        GratShifts = gratShifts,
-        //page number inside the url
-        CurrentPage = page,
-        //the amount of parks returned from the database
-        Pages = pageCount,
-        //amnt of items on the page
-        PageSize = pageSize
-      };
-      return Ok(response);
-    }
 	
     [HttpGet]
-    public async Task<List<GratShift>> Get( int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
+    public async Task<ActionResult<List<GratShift>>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
       
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
@@ -65,15 +39,15 @@ namespace GratShiftSaveApiController.Controllers
         query = query.Where(entry => entry.ShiftSales == shiftSales);
       }
 
-      if (shiftDate != null)
+      if (shiftDate != default)
       {
-        query = query.Where(entry => entry.ShiftDate >= shiftDate);
+        query = query.Where(entry => entry.ShiftDate == shiftDate);
       }
 
       return await query.ToListAsync();
     }
 
-    //Get: api/GratShifts/1
+    //Get: api/GratShift/1
     [HttpGet("{id}")]
     public async Task<ActionResult<GratShift>> GetGratShift(int id)
     {
@@ -87,7 +61,7 @@ namespace GratShiftSaveApiController.Controllers
       return Ok(gratShift);
     }
 
-    //POST api/GratShifts
+    //POST api/GratShift
     [HttpPost]
     public async Task<ActionResult<GratShift>> Post(GratShift gratShift)
     {
@@ -96,7 +70,7 @@ namespace GratShiftSaveApiController.Controllers
       return CreatedAtAction(nameof(GetGratShift), new { id = gratShift.GratShiftId }, gratShift);
     }
 
-    //PUT: api/GratShifts/2
+    //PUT: api/GratShift/2
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, GratShift gratShift)
     {
@@ -130,7 +104,7 @@ namespace GratShiftSaveApiController.Controllers
       return _db.GratShifts.Any(location => location.GratShiftId == id);
     }
 
-    //DELETE: api/GratShifts/5
+    //DELETE: api/GratShift/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteGratShift(int id)
     {
@@ -144,6 +118,33 @@ namespace GratShiftSaveApiController.Controllers
       await _db.SaveChangesAsync();
 
       return NoContent();
+    }
+
+    // Pagination Code:
+    [HttpGet("page/{page}")]
+    public async Task<ActionResult<List<GratShift>>> GetPages(int page, int pageSize = 4)
+    {
+        if (_db.GratShifts == null)
+        return NotFound();
+
+      int pageCount = _db.GratShifts.Count();
+
+      var gratShifts = await _db.GratShifts
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+      var response = new GratShiftResponse
+      {
+        GratShifts = gratShifts,
+        //page number inside the url
+        CurrentPage = page,
+        //the amount of parks returned from the database
+        Pages = pageCount,
+        //amnt of items on the page
+        PageSize = pageSize
+      };
+      return Ok(response);
     }
 
     // Random GratShift Endpoint

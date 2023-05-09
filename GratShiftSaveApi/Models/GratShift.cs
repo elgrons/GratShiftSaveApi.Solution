@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using GratShiftSaveApi.Models;
 using System.Collections.Generic;
 
 namespace GratShiftSaveApi.Models
