@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using GratShiftSaveApi.Models;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -17,32 +18,34 @@ namespace GratShiftSaveApiController.Controllers
     {
       _db = db;
     }
-	
+  
+    //GET: api/GratShift
     [HttpGet]
-    public async Task<ActionResult<List<GratShift>>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
+    public async Task<List<GratShift>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
-      
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
 
       if (cashTip >= 0)
       {
-        query = query.Where(entry => entry.CashTip == cashTip);
+        query = query.Where(entry => entry.CashTip >= cashTip);
       }
 
       if (creditTip >= 0)
       {
-        query = query.Where(entry => entry.CreditTip == creditTip);
+        query = query.Where(entry => entry.CreditTip >= creditTip);
       }
 
       if (shiftSales >= 0)
       {
-        query = query.Where(entry => entry.ShiftSales == shiftSales);
+        query = query.Where(entry => entry.ShiftSales >= shiftSales);
       }
 
       if (shiftDate != default)
       {
         query = query.Where(entry => entry.ShiftDate == shiftDate);
       }
+
+      // return await _db.GratShifts.ToListAsync();
 
       return await query.ToListAsync();
     }
