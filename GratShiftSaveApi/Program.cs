@@ -59,6 +59,15 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
   build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+// var devCorsPolicy = "devCorsPolicy";
+// builder.Services.AddCors(options => options.AddPolicy(devCorsPolicy, builder =>
+//   {
+//     builder
+//       .AllowAnyOrigin()
+//       .AllowAnyMethod()
+//       .AllowAnyHeader();
+//   }));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -81,5 +90,7 @@ app.UseStaticFiles();
 
 app.MapControllers()
     .RequireCors("corspolicy");
+
+// app.UseCors(devCorsPolicy);
 
 app.Run();

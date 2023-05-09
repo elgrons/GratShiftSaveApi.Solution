@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace GratShiftSaveApiController.Controllers
 {
-  // [Authorize(Roles = UserRole.Admin)]
+  [Authorize(Roles = UserRole.Admin)]
   [ApiController]
   [Route("api/[controller]")]
   public class GratShiftController : ControllerBase
@@ -44,8 +44,6 @@ namespace GratShiftSaveApiController.Controllers
       {
         query = query.Where(entry => entry.ShiftDate == shiftDate);
       }
-
-      // return await _db.GratShifts.ToListAsync();
 
       return await query.ToListAsync();
     }
