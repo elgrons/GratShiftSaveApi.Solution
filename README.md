@@ -113,7 +113,7 @@ Explore the API endpoints in Postman or a browser. You will not be able to utili
 ###  Swagger Documentation 
 To view the Swagger documentation for the ParksApi, launch the project using `dotnet run` using Terminal or Powershell, then input the following URL into your browser: `https://localhost:5001/swagger/index.html`
 
-![swaggerendpoints](SwaggerEndpoints.png)
+![swaggerendpoints](GratShiftSaveApi/wwwroot/img/SwaggerEndpoints.png)
 
 ### Parks
 
