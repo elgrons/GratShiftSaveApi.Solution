@@ -1,16 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GratShiftSaveApi.Models;
-using System;
 using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
-using System;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -30,15 +22,8 @@ namespace GratShiftSaveApiController.Controllers
     [HttpGet]
     public async Task<IActionResult> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
-      // var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-      // if (string.IsNullOrEmpty(userId))
-      // {
-      //   return Unauthorized();
-      // }
 
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
-      // query = query.Where(entry => entry.UserId == userId);
 
       if (cashTip >= 0)
       {

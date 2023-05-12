@@ -34,8 +34,7 @@ builder.Services.AddAuthentication(options =>
   options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
   options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-
-// Adding Jwt Bearer
+// Adding Jwt Bearer to Identity
 .AddJwtBearer(options =>
 {
   options.SaveToken = true;
@@ -48,6 +47,21 @@ builder.Services.AddAuthentication(options =>
     ValidIssuer = configuration["JWT:ValidIssuer"],
     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
   };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("lowRisk", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim(claim => 
+                claim.Type == "risk" && Int32.Parse(claim.Value) < 50
+            )
+        )
+    );
+    options.AddPolicy("developer", policy =>
+        policy.RequireClaim("title", "junior developer", "senior developer")
+        .RequireClaim ("department", "development")
+    );
 });
 
 builder.Services.AddControllers();
@@ -83,7 +97,7 @@ else
 
 app.UseCors("corspolicy");
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

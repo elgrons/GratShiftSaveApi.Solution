@@ -137,7 +137,6 @@ GET https://localhost:5001/api/GratShift/random
 ```
 {
   "gratShiftId": "int",
-  "userId": "string",
   "cashTip": "int",
   "creditTip": "int",
   "shiftSales": "int",
