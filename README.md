@@ -1,4 +1,4 @@
-# Grat Shfit Save API
+# Grat Shift Save API
 
 #### By Eliot Gronstal 5.11.23
 
@@ -106,7 +106,7 @@ Then run the following command in the console
 
 This program was built using _`Microsoft .NET SDK 6.0`_, and may not be compatible with other versions. Cross-version performance is neither implied nor guaranteed.
 
-## API Documentation
+#### API Documentation
 
 Explore the API endpoints in Postman or a browser. You will not be able to utilize authentication in a browser.
 
@@ -116,11 +116,11 @@ To view the Swagger documentation for the GratShiftSaveApi, launch the project u
 
 ![swaggerendpoints](GratShiftSaveApi/wwwroot/img/SwaggerEndpoints.png)
 
-### Grat Shift Save
+## Registration and Login
 
-Get information about different shifts worked and their corresponding total sales and accumulated gratuity.
 
-#### HTTP Request Structure
+
+## HTTP Request Structure
 
 ```
 GET https://localhost:5001/api/GratShift/
