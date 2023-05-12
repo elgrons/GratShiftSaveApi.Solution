@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GratShiftSaveApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace GratShiftSaveApiController.Controllers
@@ -13,18 +12,9 @@ namespace GratShiftSaveApiController.Controllers
   public class GratShiftController : ControllerBase
   {
     private readonly GratShiftSaveApiContext _db;
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IConfiguration _configuration;
-    public GratShiftController(
-            GratShiftSaveApiContext db,
-            UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+    public GratShiftController(GratShiftSaveApiContext db)
     {
-      _userManager = userManager;
-      _roleManager = roleManager;
-      _configuration = configuration;
+
       _db = db;
     }
 
@@ -82,10 +72,6 @@ namespace GratShiftSaveApiController.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(GratShift gratShift)
     {
-      int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-      gratShift.UserId = userId;
-
       _db.GratShifts.Add(gratShift);
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetGratShift), new { id = gratShift.GratShiftId }, gratShift);
