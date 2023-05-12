@@ -9,6 +9,7 @@ namespace GratShiftSaveApi.Models
   public class GratShift
   {
     public int GratShiftId { get; set; }
+    public string UserId { get; set; }
     [Required]
     public int CashTip { get; set; }
     [Required]

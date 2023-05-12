@@ -4,6 +4,13 @@ using GratShiftSaveApi.Models;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
+using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -18,12 +25,20 @@ namespace GratShiftSaveApiController.Controllers
     {
       _db = db;
     }
-  
+
     //GET: api/GratShift
     [HttpGet]
-    public async Task<List<GratShift>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
+    public async Task<IActionResult> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
+      var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+      if (string.IsNullOrEmpty(userId))
+      {
+        return Unauthorized();
+      }
+
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
+      query = query.Where(entry => entry.UserId == userId);
 
       if (cashTip >= 0)
       {
@@ -45,7 +60,8 @@ namespace GratShiftSaveApiController.Controllers
         query = query.Where(entry => entry.ShiftDate == shiftDate);
       }
 
-      return await query.ToListAsync();
+      var response = await query.ToListAsync();
+      return Ok(response);
     }
 
     //Get: api/GratShift/1
@@ -64,11 +80,29 @@ namespace GratShiftSaveApiController.Controllers
 
     //POST api/GratShift
     [HttpPost]
-    public async Task<ActionResult<GratShift>> Post(GratShift gratShift)
+    public async Task<IActionResult> Post([FromBody] GratShift gratShift)
     {
-      _db.GratShifts.Add(gratShift);
-      await _db.SaveChangesAsync();
-      return CreatedAtAction(nameof(GetGratShift), new { id = gratShift.GratShiftId }, gratShift);
+      if (ModelState.IsValid)
+      {
+        try
+        {
+          var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+          gratShift.UserId = userId;
+
+          _db.GratShifts.Add(gratShift);
+          await _db.SaveChangesAsync();
+
+          return CreatedAtAction(nameof(Get), new { id = gratShift.GratShiftId }, gratShift);
+        }
+        catch (Exception)
+        {
+          StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "An error occurred while saving the grat shift information to the database." });
+
+          return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+      }
+      return BadRequest(ModelState);
     }
 
     //PUT: api/GratShift/2
@@ -125,7 +159,7 @@ namespace GratShiftSaveApiController.Controllers
     [HttpGet("page/{page}")]
     public async Task<ActionResult<List<GratShift>>> GetPages(int page, int pageSize = 4)
     {
-        if (_db.GratShifts == null)
+      if (_db.GratShifts == null)
         return NotFound();
 
       int pageCount = _db.GratShifts.Count();
@@ -153,11 +187,11 @@ namespace GratShiftSaveApiController.Controllers
     public async Task<ActionResult<GratShift>> RandomGratShift()
     {
       int gratShifts = await _db.GratShifts.CountAsync();
-      
+
       if (gratShifts == 0)
-        {
-          return NotFound();
-        }
+      {
+        return NotFound();
+      }
 
       var random = new Random();
       int randoShift = random.Next(0, gratShifts);
