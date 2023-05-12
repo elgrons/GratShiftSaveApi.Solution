@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using GratShiftSaveApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -12,10 +13,12 @@ namespace GratShiftSaveApiController.Controllers
   public class GratShiftController : ControllerBase
   {
     private readonly GratShiftSaveApiContext _db;
-    public GratShiftController(GratShiftSaveApiContext db)
+    private readonly UserManager<IdentityUser> _userManager;
+    public GratShiftController(GratShiftSaveApiContext db, UserManager<IdentityUser> userManager)
     {
 
       _db = db;
+      _userManager = userManager;
     }
 
     //GET: api/GratShift
@@ -23,7 +26,8 @@ namespace GratShiftSaveApiController.Controllers
     public async Task<IActionResult> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
 
-      int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      // var currentUser = await _userManager.FindByIdAsync(userId);
 
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
 

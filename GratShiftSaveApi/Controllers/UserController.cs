@@ -76,7 +76,7 @@ namespace GratShiftSaveApiController.Controllers
       {
         await _userManager.AddToRoleAsync(user, UserRole.Admin);
       }
-      if (await _roleManager.RoleExistsAsync(UserRole.Admin))
+      if (await _roleManager.RoleExistsAsync(UserRole.User))
       {
         await _userManager.AddToRoleAsync(user, UserRole.User);
       }
