@@ -81,28 +81,10 @@ namespace GratShiftSaveApiController.Controllers
     //POST api/GratShift
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] GratShift gratShift)
-    {
-      if (ModelState.IsValid)
-      {
-        try
         {
-          var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-          gratShift.UserId = userId;
-
-          _db.GratShifts.Add(gratShift);
-          await _db.SaveChangesAsync();
-
-          return CreatedAtAction(nameof(Get), new { id = gratShift.GratShiftId }, gratShift);
-        }
-        catch (Exception)
-        {
-          StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "An error occurred while saving the grat shift information to the database." });
-
-          return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-      }
-      return BadRequest(ModelState);
+      _db.GratShifts.Add(gratShift);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetGratShift), new { id = gratShift.GratShiftId }, gratShift);
     }
 
     //PUT: api/GratShift/2
