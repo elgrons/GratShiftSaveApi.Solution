@@ -7,7 +7,7 @@ namespace GratShiftSaveApi.Models
   public class GratShiftSaveApiContext : IdentityDbContext<IdentityUser>
   {
     public DbSet<GratShift> GratShifts { get; set; }
-    public DbSet<UserLogin> UserLogins { get; set; }
+    // public DbSet<UserLogin> UserLogins { get; set; }
     public DbSet<UserResponse> UserResponses { get; set; }
 
     public GratShiftSaveApiContext(DbContextOptions<GratShiftSaveApiContext> options) : base(options)

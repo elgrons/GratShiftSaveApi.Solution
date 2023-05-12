@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace GratShiftSaveApiController.Controllers
 {
-  [Authorize(Roles = UserRole.Admin)]
+  [Authorize]
   [ApiController]
   [Route("api/[controller]")]
   public class GratShiftController : ControllerBase
