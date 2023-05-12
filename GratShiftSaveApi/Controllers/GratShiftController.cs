@@ -27,12 +27,8 @@ namespace GratShiftSaveApiController.Controllers
     {
 
       var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-      // var currentUser = await _userManager.FindByIdAsync(userId);
 
-      IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
-
-      // filter by user ID
-      query = query.Where(entry => entry.UserId == userId);
+      IQueryable<GratShift> query = _db.GratShifts.Where(gratShift => gratShift.UserId == userId);
 
       if (cashTip >= 0)
       {

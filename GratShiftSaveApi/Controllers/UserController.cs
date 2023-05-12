@@ -29,7 +29,7 @@ namespace GratShiftSaveApiController.Controllers
 
     [AllowAnonymous]
     [HttpPost]
-    [Route("register")]
+    [Route("register-user")]
     public async Task<IActionResult> Register([FromBody] UserRegister model)
     {
       var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -50,7 +50,7 @@ namespace GratShiftSaveApiController.Controllers
     }
 
     [HttpPost]
-    [Route("register-admin")]
+    [Route("register")]
     public async Task<IActionResult> RegisterAdmin([FromBody] UserRegister model)
     {
       var userExists = await _userManager.FindByNameAsync(model.Username);
