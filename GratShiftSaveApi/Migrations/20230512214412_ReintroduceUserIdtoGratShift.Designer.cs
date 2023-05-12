@@ -3,6 +3,7 @@ using System;
 using GratShiftSaveApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GratShiftSaveApi.Migrations
 {
     [DbContext(typeof(GratShiftSaveApiContext))]
-    partial class GratShiftSaveApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230512214412_ReintroduceUserIdtoGratShift")]
+    partial class ReintroduceUserIdtoGratShift
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -17,5 +17,6 @@ namespace GratShiftSaveApi.Models
     public int ShiftSales { get; set; }
     [Required]
     public DateTime ShiftDate { get; set; }
+    public int UserId { get; set; }
   }
 }

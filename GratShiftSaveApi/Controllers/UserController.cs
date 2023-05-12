@@ -27,37 +27,6 @@ namespace GratShiftSaveApiController.Controllers
       _configuration = configuration;
     }
 
-    [HttpPost]
-    [Route("login")]
-    public async Task<IActionResult> Login([FromBody] UserLogin model)
-    {
-      var user = await _userManager.FindByNameAsync(model.Username);
-      if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
-      {
-        var userRoles = await _userManager.GetRolesAsync(user);
-
-        var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-        foreach (var userRole in userRoles)
-        {
-          authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-        }
-
-        var token = GetToken(authClaims);
-
-        return Ok(new
-        {
-          token = new JwtSecurityTokenHandler().WriteToken(token),
-          expiration = token.ValidTo
-        });
-      }
-      return Unauthorized();
-    }
-
     [AllowAnonymous]
     [HttpPost]
     [Route("register")]
@@ -127,6 +96,37 @@ namespace GratShiftSaveApiController.Controllers
           );
 
       return token;
+    }
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Login([FromBody] UserLogin model)
+    {
+      var user = await _userManager.FindByNameAsync(model.Username);
+      if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+      {
+        var userRoles = await _userManager.GetRolesAsync(user);
+
+        var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+        foreach (var userRole in userRoles)
+        {
+          authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+        }
+
+        var token = GetToken(authClaims);
+
+        return Ok(new
+        {
+          token = new JwtSecurityTokenHandler().WriteToken(token),
+          expiration = token.ValidTo
+        });
+      }
+      return Unauthorized();
     }
   }
 }
