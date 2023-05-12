@@ -3,6 +3,7 @@ using System;
 using GratShiftSaveApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GratShiftSaveApi.Migrations
 {
     [DbContext(typeof(GratShiftSaveApiContext))]
-    partial class GratShiftSaveApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230512195345_UpdateTables")]
+    partial class UpdateTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +39,9 @@ namespace GratShiftSaveApi.Migrations
                     b.Property<int>("ShiftSales")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("longtext");
+
                     b.HasKey("GratShiftId");
 
                     b.ToTable("GratShifts");
@@ -48,7 +53,8 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 100,
                             CreditTip = 300,
                             ShiftDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1800
+                            ShiftSales = 1800,
+                            UserId = "1"
                         },
                         new
                         {
@@ -56,7 +62,8 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 80,
                             CreditTip = 400,
                             ShiftDate = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1900
+                            ShiftSales = 1900,
+                            UserId = "2"
                         });
                 });
 
