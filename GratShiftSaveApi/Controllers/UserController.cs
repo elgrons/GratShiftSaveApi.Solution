@@ -10,7 +10,7 @@ using System.Text;
 namespace GratShiftSaveApiController.Controllers
 {
   [ApiController]
-  [Route("api/[controller]")]
+  [Route("api/")]
   public class UserController : ControllerBase
   {
     private readonly UserManager<IdentityUser> _userManager;
