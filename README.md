@@ -137,10 +137,11 @@ GET https://localhost:5001/api/GratShift/random
 ```
 {
   "gratShiftId": "int",
+  "userId": "string",
   "cashTip": "int",
   "creditTip": "int",
   "shiftSales": "int",
-  "shiftDate": "DateTime"
+  "shiftDate": "2023-05-12T19:06:17.234Z"
 }
 ```
 
@@ -165,6 +166,13 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
   "creditTip": 300,
   "shiftSales": 1800,
   "shiftDate": "2023-03-01T00:00:00"
+}
+```
+```
+{
+    "Username":"TestAccountAdmin",
+    "Email": "testAdmin@email.com",
+    "Password":"Password123!"
 }
 ```
 
