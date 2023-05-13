@@ -20,11 +20,9 @@ https://grat-shift-save-api.azurewebsites.net/api/User/register
 
 There are custom endpoints for some of these user stories.
 
-- A user can GET and POST shift information about a park.
+- A user can GET and POST shift information about a shift they have worked.
 
-- A user can GET reviews about a park.
-
-- A user can PUT and DELETE reviews.
+- A user can GET reviews about a shift they have worked.
 
 - A user can access the API endpoint with a query parameter that specifies the page that should be returned.
 
