@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/59306a87-facb-4be7-b843-b78fb7f793e4/resourceGroups/GratShiftSave/providers/Microsoft.Web/sites/grat-shift-save-api",
+  "appService.deploySubpath": "GratShiftSaveApi/bin/Release/net6.0/publish"
+}

@@ -188,7 +188,7 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 
 - _Only admin users are currently able to Get, Post, Patch, and Delete_
 
-- _Despite my best attempts, once logged in, all users are able to see all posted entries._
+- _Post request working, but requires a user to auto input a UserId instead of being auto generated as desired._
 
 - _Reach out with any questions or concerns to [eliot.lauren@gmail.com](eliot.lauren@gmail.com)_
 
