@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System;
-using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GratShiftSaveApi.Models
 {
@@ -17,6 +15,7 @@ namespace GratShiftSaveApi.Models
     public int ShiftSales { get; set; }
     [Required]
     public DateTime ShiftDate { get; set; }
-    public int UserId { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string UserId { get; set; }
   }
 }

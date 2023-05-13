@@ -36,11 +36,14 @@ namespace GratShiftSaveApiController.Controllers
       if (userExists != null)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "User already exists!" });
 
+      var userId = Guid.NewGuid().ToString();
+
       IdentityUser user = new()
       {
         Email = model.Email,
         SecurityStamp = Guid.NewGuid().ToString(),
-        UserName = model.Username
+        UserName = model.Username,
+        Id = userId
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)
@@ -56,12 +59,15 @@ namespace GratShiftSaveApiController.Controllers
       var userExists = await _userManager.FindByNameAsync(model.Username);
       if (userExists != null)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "Account already exists with that email address." });
+      
+      var userId = Guid.NewGuid().ToString();
 
       IdentityUser user = new()
       {
         Email = model.Email,
         SecurityStamp = Guid.NewGuid().ToString(),
-        UserName = model.Username
+        UserName = model.Username,
+        Id = userId
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)
