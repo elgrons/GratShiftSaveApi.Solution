@@ -59,7 +59,7 @@ namespace GratShiftSaveApiController.Controllers
       var userExists = await _userManager.FindByNameAsync(model.Username);
       if (userExists != null)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "Account already exists with that email address." });
-      
+
       var userId = Guid.NewGuid().ToString();
 
       IdentityUser user = new()
@@ -89,9 +89,11 @@ namespace GratShiftSaveApiController.Controllers
       return Ok(new UserResponse { Status = "Success", Message = "User created successfully!" });
     }
 
-    private JwtSecurityToken GetToken(List<Claim> authClaims)
+    private JwtSecurityToken GetToken(List<Claim> authClaims, string userId)
     {
       var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+      authClaims.Add(new Claim("userId", userId));
 
       var token = new JwtSecurityToken(
           issuer: _configuration["JWT:ValidIssuer"],
@@ -118,13 +120,18 @@ namespace GratShiftSaveApiController.Controllers
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
-
         foreach (var userRole in userRoles)
         {
           authClaims.Add(new Claim(ClaimTypes.Role, userRole));
         }
 
-        var token = GetToken(authClaims);
+        var token = GetToken(authClaims, user.Id);
+        // foreach (var userRole in userRoles)
+        // {
+        //   authClaims.Add(new Claim(ClaimTypes.Role, userRole, "userId", user.Id));
+        // }
+
+        // var token = GetToken(authClaims);
 
         return Ok(new
         {

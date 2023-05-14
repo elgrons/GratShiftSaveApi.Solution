@@ -23,9 +23,12 @@ namespace GratShiftSaveApiController.Controllers
 
     //GET: api/GratShift
     [HttpGet]
-    public async Task<IActionResult> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate, string userId)
+    public async Task<ActionResult<IEnumerable<GratShift>>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate, string userId)
     {
-      IQueryable<GratShift> query = _db.GratShifts.Where(gratShift => gratShift.UserId == userId);
+      // string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      IdentityUser UserId = await _userManager.FindByIdAsync(userId);
+      IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
+      //.Where(entry => entry.UserId == userId);
 
       if (cashTip >= 0)
       {
