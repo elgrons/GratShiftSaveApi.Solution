@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GratShiftSaveApi.Migrations
 {
     [DbContext(typeof(GratShiftSaveApiContext))]
-    [Migration("20230509205935_AddUsernametoUserRegisterandUserLogin")]
-    partial class AddUsernametoUserRegisterandUserLogin
+    [Migration("20230514184652_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,11 @@ namespace GratShiftSaveApi.Migrations
                     b.Property<int>("ShiftSales")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext");
+
                     b.HasKey("GratShiftId");
 
                     b.ToTable("GratShifts");
@@ -50,7 +55,8 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 100,
                             CreditTip = 300,
                             ShiftDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1800
+                            ShiftSales = 1800,
+                            UserId = "2"
                         },
                         new
                         {
@@ -58,22 +64,9 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 80,
                             CreditTip = 400,
                             ShiftDate = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1900
+                            ShiftSales = 1900,
+                            UserId = "1"
                         });
-                });
-
-            modelBuilder.Entity("GratShiftSaveApi.Models.UserLogin", b =>
-                {
-                    b.Property<string>("Username")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Username");
-
-                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("GratShiftSaveApi.Models.UserResponse", b =>

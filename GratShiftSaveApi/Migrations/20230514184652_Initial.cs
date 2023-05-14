@@ -1,111 +1,105 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace GratShiftSaveApi.Migrations
 {
-    public partial class updateDbContexttoIdentityDbContext : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_IdentityUser",
-                table: "IdentityUser");
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_IdentityRole",
-                table: "IdentityRole");
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.RenameTable(
-                name: "IdentityUser",
-                newName: "AspNetUsers");
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.RenameTable(
-                name: "IdentityRole",
-                newName: "AspNetRoles");
+            migrationBuilder.CreateTable(
+                name: "GratShifts",
+                columns: table => new
+                {
+                    GratShiftId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CashTip = table.Column<int>(type: "int", nullable: false),
+                    CreditTip = table.Column<int>(type: "int", nullable: false),
+                    ShiftSales = table.Column<int>(type: "int", nullable: false),
+                    ShiftDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GratShifts", x => x.GratShiftId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AspNetUsers",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedUserName",
-                table: "AspNetUsers",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedEmail",
-                table: "AspNetUsers",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "AspNetUsers",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedName",
-                table: "AspNetRoles",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "AspNetRoles",
-                type: "varchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_AspNetUsers",
-                table: "AspNetUsers",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_AspNetRoles",
-                table: "AspNetRoles",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "UserResponses",
+                columns: table => new
+                {
+                    Status = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Message = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserResponses", x => x.Status);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -234,27 +228,26 @@ namespace GratShiftSaveApi.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
+            migrationBuilder.InsertData(
+                table: "GratShifts",
+                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales", "UserId" },
+                values: new object[] { 1, 100, 300, new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1800, "2" });
+
+            migrationBuilder.InsertData(
+                table: "GratShifts",
+                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales", "UserId" },
+                values: new object[] { 2, 80, 400, new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900, "1" });
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true);
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -270,6 +263,17 @@ namespace GratShiftSaveApi.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -289,115 +293,17 @@ namespace GratShiftSaveApi.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_AspNetUsers",
-                table: "AspNetUsers");
+            migrationBuilder.DropTable(
+                name: "GratShifts");
 
-            migrationBuilder.DropIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers");
+            migrationBuilder.DropTable(
+                name: "UserResponses");
 
-            migrationBuilder.DropIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers");
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_AspNetRoles",
-                table: "AspNetRoles");
-
-            migrationBuilder.DropIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles");
-
-            migrationBuilder.RenameTable(
-                name: "AspNetUsers",
-                newName: "IdentityUser");
-
-            migrationBuilder.RenameTable(
-                name: "AspNetRoles",
-                newName: "IdentityRole");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "IdentityUser",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedUserName",
-                table: "IdentityUser",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedEmail",
-                table: "IdentityUser",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "IdentityUser",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NormalizedName",
-                table: "IdentityRole",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "IdentityRole",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_IdentityUser",
-                table: "IdentityUser",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_IdentityRole",
-                table: "IdentityRole",
-                column: "Id");
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

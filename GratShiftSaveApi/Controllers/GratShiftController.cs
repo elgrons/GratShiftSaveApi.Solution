@@ -65,20 +65,26 @@ namespace GratShiftSaveApiController.Controllers
       return Ok(gratShift);
     }
 
-    //POST api/GratShift
+    // POST api/GratShift
     [HttpPost]
     public async Task<IActionResult> Post(GratShift gratShift)
     {
-    if (!ModelState.IsValid)
-    {
+      if (!ModelState.IsValid)
+      {
         return BadRequest(ModelState);
+      }
+      var userIdentity = User.Identity;
+      if (userIdentity == null)
+      {
+        return Unauthorized();
+      }
+      gratShift.UserId = userIdentity.Name;
+
+      _db.GratShifts.Add(gratShift);
+      await _db.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(Get), new { id = gratShift.GratShiftId }, gratShift);
     }
-
-    _db.GratShifts.Add(gratShift);
-    await _db.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(Get), new { id = gratShift.GratShiftId }, gratShift);
-}
 
     //PUT: api/GratShift/2
     [HttpPut("{id}")]

@@ -58,10 +58,8 @@ builder.Services.AddAuthorization(options =>
             )
         )
     );
-    options.AddPolicy("developer", policy =>
-        policy.RequireClaim("title", "junior developer", "senior developer")
-        .RequireClaim ("department", "development")
-    );
+    options.AddPolicy("IsAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+    options.AddPolicy("IsUser", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
 });
 
 builder.Services.AddControllers();
@@ -96,8 +94,6 @@ else
 }
 
 app.UseCors("corspolicy");
-
-// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -4,7 +4,7 @@
 
 namespace GratShiftSaveApi.Migrations
 {
-    public partial class UpdateTables : Migration
+    public partial class SecondUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
