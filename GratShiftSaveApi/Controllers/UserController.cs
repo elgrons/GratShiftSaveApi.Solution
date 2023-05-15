@@ -117,7 +117,7 @@ namespace GratShiftSaveApiController.Controllers
 
         var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
         foreach (var userRole in userRoles)

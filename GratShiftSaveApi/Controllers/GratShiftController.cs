@@ -28,12 +28,12 @@ namespace GratShiftSaveApiController.Controllers
     public async Task<ActionResult<IEnumerable<GratShift>>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
       string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      IdentityUser user = await _userManager.FindByIdAsync(userId);
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
-      //.Where(entry => entry.UserId == userId);
-      // if (userId != null)
-      // {
-      //   query = query.Where(entry => entry.UserId == userId);
-      // }
+      if (userId != null)
+      {
+        query = query.Where(entry => entry.UserId == userId);
+      }
       if (cashTip >= 0)
       {
         query = query.Where(entry => entry.CashTip >= cashTip);
@@ -54,7 +54,7 @@ namespace GratShiftSaveApiController.Controllers
         query = query.Where(entry => entry.ShiftDate == shiftDate);
       }
 
-      var result = await query.ToListAsync(); 
+      var result = await query.ToListAsync();
       return Ok(result);
     }
 
@@ -74,9 +74,9 @@ namespace GratShiftSaveApiController.Controllers
 
     // POST api/GratShift
     [HttpPost]
-      public async Task<IActionResult> Post(GratShift gratShift)
-      {
-        if (!ModelState.IsValid)
+    public async Task<IActionResult> Post(GratShift gratShift)
+    {
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
