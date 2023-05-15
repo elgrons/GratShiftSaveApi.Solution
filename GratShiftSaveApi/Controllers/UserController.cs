@@ -126,12 +126,6 @@ namespace GratShiftSaveApiController.Controllers
         }
 
         var token = GetToken(authClaims, user.Id);
-        // foreach (var userRole in userRoles)
-        // {
-        //   authClaims.Add(new Claim(ClaimTypes.Role, userRole, "userId", user.Id));
-        // }
-
-        // var token = GetToken(authClaims);
 
         return Ok(new
         {

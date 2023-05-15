@@ -230,13 +230,13 @@ namespace GratShiftSaveApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "GratShifts",
-                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales", "UserId" },
-                values: new object[] { 1, 100, 300, new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1800, "2" });
+                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales" },
+                values: new object[] { 1, 100, 300, new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1800 });
 
             migrationBuilder.InsertData(
                 table: "GratShifts",
-                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales", "UserId" },
-                values: new object[] { 2, 80, 400, new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900, "1" });
+                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales" },
+                values: new object[] { 2, 80, 400, new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

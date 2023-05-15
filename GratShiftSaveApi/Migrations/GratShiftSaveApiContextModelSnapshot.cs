@@ -53,8 +53,7 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 100,
                             CreditTip = 300,
                             ShiftDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1800,
-                            UserId = "2"
+                            ShiftSales = 1800
                         },
                         new
                         {
@@ -62,8 +61,7 @@ namespace GratShiftSaveApi.Migrations
                             CashTip = 80,
                             CreditTip = 400,
                             ShiftDate = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1900,
-                            UserId = "1"
+                            ShiftSales = 1900
                         });
                 });
 
