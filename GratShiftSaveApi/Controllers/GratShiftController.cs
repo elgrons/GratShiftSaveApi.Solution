@@ -14,17 +14,19 @@ namespace GratShiftSaveApiController.Controllers
   {
     private readonly GratShiftSaveApiContext _db;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
 
-    public GratShiftController(GratShiftSaveApiContext db, UserManager<IdentityUser> userManager)
+    public GratShiftController(GratShiftSaveApiContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
     {
 
       _db = db;
       _userManager = userManager;
+      _roleManager = roleManager;
     }
 
     [HttpGet("account/{userId}")]
-    public async Task<ActionResult<IEnumerable<GratShift>>> GetAccountData(string userId)
+    public async Task<ActionResult<IEnumerable<GratShift>>> GetSingleUserAccountData(string userId)
     {
       var gratShift = await _db.GratShifts.Where(entry => entry.UserId == userId).ToListAsync();
       if (gratShift.Count == 0)
@@ -36,6 +38,7 @@ namespace GratShiftSaveApiController.Controllers
 
     //GET: api/GratShift
     [HttpGet]
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<ActionResult<GratShift>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
       string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
