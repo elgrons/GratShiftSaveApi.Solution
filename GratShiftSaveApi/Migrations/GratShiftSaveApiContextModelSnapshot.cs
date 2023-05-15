@@ -45,24 +45,6 @@ namespace GratShiftSaveApi.Migrations
                     b.HasKey("GratShiftId");
 
                     b.ToTable("GratShifts");
-
-                    b.HasData(
-                        new
-                        {
-                            GratShiftId = 1,
-                            CashTip = 100,
-                            CreditTip = 300,
-                            ShiftDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1800
-                        },
-                        new
-                        {
-                            GratShiftId = 2,
-                            CashTip = 80,
-                            CreditTip = 400,
-                            ShiftDate = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1900
-                        });
                 });
 
             modelBuilder.Entity("GratShiftSaveApi.Models.UserResponse", b =>

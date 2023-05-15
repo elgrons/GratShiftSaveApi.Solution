@@ -24,12 +24,6 @@ namespace GratShiftSaveApi.Models
       builder.Entity<GratShift>()
           .Property(gs => gs.UserId)
           .IsRequired();
-
-      builder.Entity<GratShift>()
-          .HasData(
-            new GratShift { GratShiftId = 1, CashTip = 100, CreditTip = 300, ShiftSales = 1800, ShiftDate = new DateTime(2023, 3, 1)},
-            new GratShift { GratShiftId = 2, CashTip = 80, CreditTip = 400, ShiftSales = 1900, ShiftDate = new DateTime(2022, 12, 11)}
-                  );
     }
   }
 }

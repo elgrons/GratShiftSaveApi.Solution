@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GratShiftSaveApi.Migrations
 {
-    public partial class Initial : Migration
+    public partial class ReIntialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -227,16 +227,6 @@ namespace GratShiftSaveApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "GratShifts",
-                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales" },
-                values: new object[] { 1, 100, 300, new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1800 });
-
-            migrationBuilder.InsertData(
-                table: "GratShifts",
-                columns: new[] { "GratShiftId", "CashTip", "CreditTip", "ShiftDate", "ShiftSales" },
-                values: new object[] { 2, 80, 400, new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

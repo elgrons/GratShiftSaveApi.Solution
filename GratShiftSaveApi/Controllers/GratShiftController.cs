@@ -23,17 +23,25 @@ namespace GratShiftSaveApiController.Controllers
       _userManager = userManager;
     }
 
+    [HttpGet("account/{userId}")]
+    public async Task<ActionResult<IEnumerable<GratShift>>> GetAccountData(string userId)
+    {
+      var gratShift = await _db.GratShifts.Where(entry => entry.UserId == userId).ToListAsync();
+      if (gratShift.Count == 0)
+      {
+        return NotFound();
+      }
+      return Ok(gratShift);
+    }
+
     //GET: api/GratShift
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GratShift>>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
+    public async Task<ActionResult<GratShift>> Get(int cashTip, int creditTip, int shiftSales, DateTime shiftDate)
     {
       string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      IdentityUser user = await _userManager.FindByIdAsync(userId);
+      GratShift gratShift = await _db.GratShifts.FirstOrDefaultAsync(entry => entry.UserId == userId);
       IQueryable<GratShift> query = _db.GratShifts.AsQueryable();
-      if (userId != null)
-      {
-        query = query.Where(entry => entry.UserId == userId);
-      }
+
       if (cashTip >= 0)
       {
         query = query.Where(entry => entry.CashTip >= cashTip);

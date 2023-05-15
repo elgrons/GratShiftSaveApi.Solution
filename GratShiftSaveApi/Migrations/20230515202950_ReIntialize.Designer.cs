@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GratShiftSaveApi.Migrations
 {
     [DbContext(typeof(GratShiftSaveApiContext))]
-    [Migration("20230515154403_IntroAppUsertoGratShiftss")]
-    partial class IntroAppUsertoGratShiftss
+    [Migration("20230515202950_ReIntialize")]
+    partial class ReIntialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,31 +42,11 @@ namespace GratShiftSaveApi.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("GratShiftId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("GratShifts");
-
-                    b.HasData(
-                        new
-                        {
-                            GratShiftId = 1,
-                            CashTip = 100,
-                            CreditTip = 300,
-                            ShiftDate = new DateTime(2023, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1800
-                        },
-                        new
-                        {
-                            GratShiftId = 2,
-                            CashTip = 80,
-                            CreditTip = 400,
-                            ShiftDate = new DateTime(2022, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShiftSales = 1900
-                        });
                 });
 
             modelBuilder.Entity("GratShiftSaveApi.Models.UserResponse", b =>
@@ -272,17 +252,6 @@ namespace GratShiftSaveApi.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("GratShiftSaveApi.Models.GratShift", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
