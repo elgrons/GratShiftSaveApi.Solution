@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+// using FirebaseAdmin.Auth;
+// using Firebase.Auth;
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -16,15 +18,18 @@ namespace GratShiftSaveApiController.Controllers
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    // private readonly FirebaseAuth _firebaseAuth;
 
     public UserController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration)
+            // FirebaseAuth firebaseAuth)
     {
       _userManager = userManager;
       _roleManager = roleManager;
       _configuration = configuration;
+      // _firebaseAuth = firebaseAuth;
     }
 
     [AllowAnonymous]
@@ -37,6 +42,7 @@ namespace GratShiftSaveApiController.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "User already exists!" });
 
       var userId = Guid.NewGuid().ToString();
+      // var firebaseUid = IdentityUser.Uid;
 
       IdentityUser user = new()
       {
@@ -44,6 +50,7 @@ namespace GratShiftSaveApiController.Controllers
         SecurityStamp = Guid.NewGuid().ToString(),
         UserName = model.Username,
         Id = userId
+        // Uid = FirebaseUid
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)

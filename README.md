@@ -128,6 +128,19 @@ PUT https://localhost:5001/api/GratShift/{id}
 DELETE https://localhost:5001/api/GratShift/{id}
 GET https://localhost:5001/api/GratShift/page/{page}
 GET https://localhost:5001/api/GratShift/random
+GET https://localhost:5001/api/GratShift/?TestAccount
+```
+```
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/account/{userId}
+POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/
+PUT https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
+DELETE https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/page/{page}
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/random
+POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/register
+POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/login
 ```
 
 - To utilize the POST request and create a new instance of a GratShift, the following information is required.
@@ -167,8 +180,8 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 ```
 ```
 {
-    "Username":"TestAccountAdmin",
-    "Email": "testAdmin@email.com",
+    "Username":"TestAccount",
+    "Email": "testAccount@email.com",
     "Password":"Password123!"
 }
 ```
@@ -185,6 +198,8 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 ## Known Bugs
 
 - _Only admin users are currently able to Get, Post, Patch, and Delete_
+
+- _Get requests currently allow users to get every User's input data instead of only the data related to their own account._
 
 - _Post request working, but requires a user to auto input a UserId instead of being auto generated as desired._
 

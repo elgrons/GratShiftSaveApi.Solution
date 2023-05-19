@@ -1,4 +1,5 @@
 obj
 bin
 appsettings.json
+serviceaccountkey.json
 oldconnectionstring.txt

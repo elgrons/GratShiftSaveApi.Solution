@@ -8,6 +8,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Google.Cloud.Firestore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -71,6 +73,18 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
   build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
+
+// Path to the service account key JSON file
+string path = "/path/to/your/serviceAccountKey.json";
+
+// Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
+Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+
+// Initialize Firestore
+FirestoreDb db = FirestoreDb.Create(builder.Configuration["Firestore:ProjectId"]);
+
+// Add Firestore to the services collection
+builder.Services.AddSingleton(db);
 
 // var devCorsPolicy = "devCorsPolicy";
 // builder.Services.AddCors(options => options.AddPolicy(devCorsPolicy, builder =>
