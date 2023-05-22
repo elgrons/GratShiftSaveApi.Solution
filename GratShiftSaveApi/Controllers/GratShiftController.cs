@@ -113,7 +113,15 @@ namespace GratShiftSaveApiController.Controllers
         return BadRequest();
       }
 
-      _db.GratShifts.Update(gratShift);
+      var currentUserId = User.Identity.Name;
+      var originalGratShift = await _db.GratShifts.FindAsync(id);
+
+      if (originalGratShift.UserId != currentUserId)
+      {
+        return Forbid();
+      }
+
+      _db.Entry(originalGratShift).CurrentValues.SetValues(gratShift);
 
       try
       {
@@ -147,7 +155,12 @@ namespace GratShiftSaveApiController.Controllers
       {
         return NotFound();
       }
+      var currentUserId = User.Identity.Name;
 
+      if (gratShift.UserId != currentUserId)
+      {
+        return Forbid();
+      }
       _db.GratShifts.Remove(gratShift);
       await _db.SaveChangesAsync();
 

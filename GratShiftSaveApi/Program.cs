@@ -53,15 +53,15 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("lowRisk", policy =>
-        policy.RequireAssertion(context =>
-            context.User.HasClaim(claim => 
-                claim.Type == "risk" && Int32.Parse(claim.Value) < 50
-            )
-        )
-    );
-    options.AddPolicy("IsAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-    options.AddPolicy("IsUser", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
+  options.AddPolicy("lowRisk", policy =>
+      policy.RequireAssertion(context =>
+          context.User.HasClaim(claim =>
+              claim.Type == "risk" && Int32.Parse(claim.Value) < 50
+          )
+      )
+  );
+  options.AddPolicy("IsAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+  options.AddPolicy("IsUser", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
 });
 
 builder.Services.AddControllers();
@@ -75,7 +75,7 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 }));
 
 // Path to the service account key JSON file
-string path = "/path/to/your/serviceAccountKey.json";
+string path = "serviceaccountkey.json";
 
 // Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
@@ -85,6 +85,7 @@ FirestoreDb db = FirestoreDb.Create(builder.Configuration["Firestore:ProjectId"]
 
 // Add Firestore to the services collection
 builder.Services.AddSingleton(db);
+
 
 // var devCorsPolicy = "devCorsPolicy";
 // builder.Services.AddCors(options => options.AddPolicy(devCorsPolicy, builder =>

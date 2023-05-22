@@ -6,8 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-// using FirebaseAdmin.Auth;
-// using Firebase.Auth;
+using Google.Cloud.Firestore;
 
 namespace GratShiftSaveApiController.Controllers
 {
@@ -18,18 +17,17 @@ namespace GratShiftSaveApiController.Controllers
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
-    // private readonly FirebaseAuth _firebaseAuth;
-
+    private readonly FirestoreDb _db;
     public UserController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
-            // FirebaseAuth firebaseAuth)
+            IConfiguration configuration,
+            FirestoreDb db)
     {
       _userManager = userManager;
       _roleManager = roleManager;
       _configuration = configuration;
-      // _firebaseAuth = firebaseAuth;
+      _db = db;
     }
 
     [AllowAnonymous]
@@ -56,6 +54,16 @@ namespace GratShiftSaveApiController.Controllers
       if (!result.Succeeded)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
+      var firestoreUser = new
+      {
+        Id = user.Id,
+        Email = user.Email,
+        UserName = user.UserName
+      };
+
+      var userCollection = _db.Collection("Users");
+      await userCollection.Document(user.Id).SetAsync(firestoreUser);
+
       return Ok(new UserResponse { Status = "Success", Message = "User created successfully!" });
     }
 
@@ -79,6 +87,16 @@ namespace GratShiftSaveApiController.Controllers
       var result = await _userManager.CreateAsync(user, model.Password);
       if (!result.Succeeded)
         return StatusCode(StatusCodes.Status500InternalServerError, new UserResponse { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+      var firestoreUser = new
+      {
+        Id = user.Id,
+        Email = user.Email,
+        UserName = user.UserName
+      };
+
+      var userCollection = _db.Collection("Users");
+      await userCollection.Document(user.Id).SetAsync(firestoreUser);
 
       if (!await _roleManager.RoleExistsAsync(UserRole.Admin))
         await _roleManager.CreateAsync(new IdentityRole(UserRole.Admin));
