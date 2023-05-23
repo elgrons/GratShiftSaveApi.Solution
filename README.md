@@ -4,6 +4,7 @@
 
 <h5 align="center"> A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.</h5>
 
+==Index==
 #### [Technologies Used](#technologies-used)
 #### [Description](#description)
 #### [Setup and Installation](#setup-and-installation)
@@ -189,7 +190,7 @@ To view the Swagger documentation for the GratShiftSaveApi, launch the project u
 
 ![swaggerendpoints](GratShiftSaveApi/wwwroot/img/SwaggerEndpoints.png)
 
-### HTTP Request Structure
+## HTTP Request Structure
 
 If you're using `dotnet run` the following endpoints can be used via localhost:
 ```
@@ -219,7 +220,7 @@ POST https://grat-shift-save-api.azurewebsites.net/api/register-user
 POST https://grat-shift-save-api.azurewebsites.net/api/login
 ```
 
-## Registration, and Login with JWT-based Authentication
+## Registration, Login, and JWT Authentication
 
 ### Registration
 - To register a user in Postman the following structure is required for the POST request:
@@ -273,7 +274,7 @@ POST https://grat-shift-save-api.azurewebsites.net/api/login
 
 ![useridgetrequest](GratShiftSaveApi/wwwroot/img/GetByUserId.png)
 
-### Example Query
+## Example Query
 
 ```
 https://localhost:5001/api/GratShift/1
@@ -285,7 +286,7 @@ or using the hosted domain
 https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 ```
 
-### Sample JSON Response
+## Sample JSON Response
 
 For an instance of creating a GratShift entry:
 ```
@@ -306,7 +307,7 @@ For an instance of creating a user:
 }
 ```
 
-### Pagination
+## Pagination
 
 - Paging refers to getting a smaller selection of results from GratShiftSaveApi and browsing through page by page.
 
