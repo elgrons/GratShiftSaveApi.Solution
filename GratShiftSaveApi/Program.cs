@@ -2,14 +2,10 @@ using GratShiftSaveApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Google.Cloud.Firestore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -86,16 +82,6 @@ FirestoreDb db = FirestoreDb.Create(builder.Configuration["Firestore:ProjectId"]
 // Add Firestore to the services collection
 builder.Services.AddSingleton(db);
 
-
-// var devCorsPolicy = "devCorsPolicy";
-// builder.Services.AddCors(options => options.AddPolicy(devCorsPolicy, builder =>
-//   {
-//     builder
-//       .AllowAnyOrigin()
-//       .AllowAnyMethod()
-//       .AllowAnyHeader();
-//   }));
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -116,7 +102,5 @@ app.UseStaticFiles();
 
 app.MapControllers()
     .RequireCors("corspolicy");
-
-// app.UseCors(devCorsPolicy);
 
 app.Run();

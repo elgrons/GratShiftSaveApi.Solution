@@ -193,27 +193,5 @@ namespace GratShiftSaveApiController.Controllers
       };
       return Ok(response);
     }
-
-    // Random GratShift Endpoint
-    [HttpGet("random")]
-    public async Task<ActionResult<GratShift>> RandomGratShift()
-    {
-      int gratShifts = await _db.GratShifts.CountAsync();
-
-      if (gratShifts == 0)
-      {
-        return NotFound();
-      }
-
-      var random = new Random();
-      int randoShift = random.Next(0, gratShifts);
-
-      GratShift gratShiftRandom = await _db.GratShifts
-        .OrderBy(gratShift => gratShift.GratShiftId)
-        .Skip(randoShift)
-        .FirstOrDefaultAsync();
-
-      return Ok(gratShiftRandom);
-    }
   }
 }
