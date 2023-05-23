@@ -70,16 +70,13 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
   build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
-// Path to the service account key JSON file
+//Firestore db settings/steps:
 string path = "serviceaccountkey.json";
-
-// Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
+// set the GOOGLE_APPLICATION_CREDENTIALS environment
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
-
-// Initialize Firestore
+// initialize Firestore database
 FirestoreDb db = FirestoreDb.Create(builder.Configuration["Firestore:ProjectId"]);
-
-// Add Firestore to the services collection
+// add Firestore database to the services collection: creates a single instance of the service when it is first requested and reuses that same instance in all the places where that service is needed.
 builder.Services.AddSingleton(db);
 
 var app = builder.Build();

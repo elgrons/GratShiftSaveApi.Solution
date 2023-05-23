@@ -1,8 +1,20 @@
 <h1 align="center"> Grat Shift Save API</h1>
 
-<h3 align="center">By Eliot Gronstal 5.11.23</h3>
+<h4 align="center">By Eliot Gronstal 5.11.23</h4>
 
-<h3 align="center"> A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.</h3>
+<h5 align="center"> A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.</h5>
+
+#### [Technologies Used](#technologies-used)
+#### [Description](#description)
+#### [Setup / Installation](#setup-installation)
+#### [API Documentation](#api-documentation)
+#### [HTTP Request Structure](#http-request-structure)
+#### [Registration, Login, and JWT Authentication](#registration-and-login-with-jwt-based-authentication)
+#### [Example Query](#example-query)
+#### [Sample JSON Response](#sample-json-response)
+#### [Pagination](#pagination)
+#### [Known Bugs](#known-bugs)
+#### [License](#license) 
 
 ## Technologies Used
 
@@ -29,7 +41,7 @@ There are custom endpoints for some of these user stories:
 
 * A user can access the API endpoint with a query parameter that specifies a page which should be returned.
 
-## Setup/Installation Requirements
+## Setup/Installation
 
 _Requires console application such as Git Bash, Terminal, or PowerShell_
 
@@ -207,9 +219,9 @@ POST https://grat-shift-save-api.azurewebsites.net/api/register-user
 POST https://grat-shift-save-api.azurewebsites.net/api/login
 ```
 
-### Registration, and Login with JWT-based Authentication
+## Registration, and Login with JWT-based Authentication
 
-## Registration
+### Registration
 - To register a user in Postman the following structure is required for the POST request:
 ```
 {
@@ -220,7 +232,7 @@ POST https://grat-shift-save-api.azurewebsites.net/api/login
 ```
 ![register](GratShiftSaveApi/wwwroot/img/CreateUser.png)
 
-## Login and JWT Retrieval
+### Login and JWT Retrieval
 
 - To login a user in Postman the previous structure in the body (that contains Username, Email, and Password data) may remain. For the login POST request ensure the endpoint is updated from "register" to "login".
 
@@ -235,9 +247,9 @@ POST https://grat-shift-save-api.azurewebsites.net/api/login
 
 ![getrequest](GratShiftSaveApi/wwwroot/img/GetRequest.png)
 
-### Generating New Instance of GratShift
+### Creating a New Instance of GratShift
 
-- To utilize the POST request and create a new instance of a GratShift, the following information structure is required, while the actual information input can vary.
+- To utilize the POST request and generate a new instance of a GratShift, the following information structure is required, while the actual information input can vary.
 
 ```
 {
@@ -249,7 +261,19 @@ POST https://grat-shift-save-api.azurewebsites.net/api/login
 }
 ```
 
-#### Example Query
+- A unique "userId" has been generated during the registration processes and is automatically assigned to the account of the user who creates the GratShift entry.
+
+![postgratshift](GratShiftSaveApi/wwwroot/img/CreateGratShift.png)
+
+- If you are utilizing the Firestore database as well, you can see the automatically generated unique "userId", UserName, and Email match the account of the user who created the GratShift entry in MySQL.
+
+![firestoreuserid](GratShiftSaveApi/wwwroot/img/FirestoreUserId.png)
+
+- That UserId can also be used in a GET request to query that only User's unique GratShift data.
+
+![useridgetrequest](GratShiftSaveApi/wwwroot/img/GetByUserId.png)
+
+### Example Query
 
 ```
 https://localhost:5001/api/GratShift/1
@@ -261,16 +285,16 @@ or using the hosted domain
 https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 ```
 
-#### Sample JSON Response
+### Sample JSON Response
 
 For an instance of a GratShift:
 ```
 {
   "gratShiftId": 1,
-  "cashTip": 100,
+  "cashTip": 80,
   "creditTip": 300,
-  "shiftSales": 1800,
-  "shiftDate": "2023-03-01T00:00:00"
+  "shiftSales": 2200,
+  "shiftDate": "2023-05-01T00:00:00"
 }
 ```
 For an instance of creating a user:
@@ -282,7 +306,7 @@ For an instance of creating a user:
 }
 ```
 
-## Pagination
+### Pagination
 
 - Paging refers to getting a smaller selection of results from GratShiftSaveApi and browsing through page by page.
 
