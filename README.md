@@ -4,23 +4,6 @@
 
 <h4 align="center"> A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.</h5>
 
-<h4 style="text-decoration:underline">Index</h4>
-<details>
-
-#### [Technologies Used](#technologies-used)
-#### [Description](#description)
-#### [Setup and Installation](#setup-and-installation)
-#### [API Documentation](#api-documentation)
-#### [HTTP Request Structure](#http-request-structure)
-#### [Registration, Login, and JWT Authentication](#registration-login-and-jwt-authentication)
-#### [Example Query](#example-query)
-#### [Sample JSON Response](#sample-json-response)
-#### [Pagination](#pagination)
-#### [Known Bugs](#known-bugs)
-#### [License](#license)
-
-</details>
-
 ## Technologies Used
 
 * _C#_
