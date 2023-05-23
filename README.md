@@ -6,7 +6,7 @@
 
 #### [Technologies Used](#technologies-used)
 #### [Description](#description)
-#### [Setup / Installation](#setup-installation)
+#### [Setup and Installation](#setup-and-installation)
 #### [API Documentation](#api-documentation)
 #### [HTTP Request Structure](#http-request-structure)
 #### [Registration, Login, and JWT Authentication](#registration-and-login-with-jwt-based-authentication)
@@ -41,7 +41,7 @@ There are custom endpoints for some of these user stories:
 
 * A user can access the API endpoint with a query parameter that specifies a page which should be returned.
 
-## Setup/Installation
+## Setup and Installation
 
 _Requires console application such as Git Bash, Terminal, or PowerShell_
 
@@ -287,7 +287,7 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 
 ### Sample JSON Response
 
-For an instance of a GratShift:
+For an instance of creating a GratShift entry:
 ```
 {
   "gratShiftId": 1,
