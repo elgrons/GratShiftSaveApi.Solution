@@ -1,4 +1,4 @@
-# Grat Shift Save API
+<h1 align="center"> Grat Shift Save API</h1>
 
 #### By Eliot Gronstal 5.11.23
 
@@ -52,13 +52,15 @@ _Requires console application such as Git Bash, Terminal, or PowerShell_
         ├── ...
         ├── README.md</pre>
 
-3. Create a .gitignore file in your root project folder. This project will require use of sensitive information that should not be publicly shared.
+3. Create a `.gitignore` file in the root folder. This project will require use of sensitive information that should not be publicly shared.
 
 4. Copy and paste the following information into the .gitignore file:
+```text
 obj
 bin
 appsettings.json
 serviceaccountkey.json
+```
 
 5. Create two files in the following location, inside the GratShiftSaveApi folder:
 
@@ -94,11 +96,11 @@ serviceaccountkey.json
 ```
 7. Replace the informoration within the curly brackets with your Firebase service account private key. To generate that key you will need to:
 
-    *NOTE* If you are not planning on using this Web Api with the corresponding React.js front end (or creating a separate front end of your own) the following steps are not required.
+    *NOTE* If you are not planning on using this Web Api with the corresponding React.js front-end the following instructions within Step 7 are not required and you may skip ahead to Step 8.
 
   * Set up a [Firebase account](https://firebase.google.com/)
   * Click on "Get Started", then "+ Add Project" to create a Firebase project that will hold the Firestore database and corresponding app.
-  * In the middle of the homepage we'll see the message "Get started by adding Firebase to your app". This area gives us options to configure our Firebase to connect to a web app, an Android app, or an iOS app. The <strong></><strong> icon inside the circle represents web apps.
+  * In the middle of the homepage we'll see the message "Get started by adding Firebase to your app". This area gives us options to configure our Firebase to connect to a web app, an Android app, or an iOS app. The <strong></></strong> icon inside the circle represents web apps.
   * Set up a Firestore database by clicking on the "Build" tab in the left-hand menu, and then select Firestore Database.
   * Click on the create database button and do the following:
     - Start in Test Mode and click through
@@ -162,11 +164,11 @@ Then run the following command in the console
 
 This program was built using _`Microsoft .NET SDK 6.0`_, and may not be compatible with other versions. The performance of this app with other versions is not insinuated nor assured.
 
-#### API Documentation
+## API Documentation
 
 Explore the API endpoints in Postman or in a browser. You will not be able to utilize authentication in a browser so using Postman is recommended.
 
-### Swagger Documentation
+#### Swagger Documentation
 
 To view the Swagger documentation for the GratShiftSaveApi, launch the project using `dotnet run` using Terminal or Powershell, then input the following URL into your browser: `https://localhost:5001/swagger/index.html`
 
