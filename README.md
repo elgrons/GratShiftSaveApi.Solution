@@ -1,8 +1,8 @@
 <h1 align="center"> Grat Shift Save API</h1>
 
-#### By Eliot Gronstal 5.11.23
+<h3 align="center">By Eliot Gronstal 5.11.23</h3>
 
-#### A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.
+<h3 align="center"> A web API created to host and track an authenticated user's gratuity based income using a MySQL database. It was made with JWT for Authentication and uses Entity and Identity Frameworks. A Google Firestore database table called "Users" is also created for the purpose of utilizing that informtation for the app's corresponding React.js front end.</h3>
 
 ## Technologies Used
 
@@ -34,15 +34,18 @@ There are custom endpoints for some of these user stories:
 _Requires console application such as Git Bash, Terminal, or PowerShell_
 
 1. Open Git Bash or PowerShell if using Windows and Terminal if using Mac
+
 2. Run the command
 
    `git clone https://github.com/elgrons/GratShiftSaveApi.Solution`
 
-3. Run the command
+3. Run the command and open the project file.
 
    `cd GratShiftSaveApi.Solution`
 
-- You should now have a folder `GratShiftSaveApi` with the following structure.
+4. Create a `.gitignore` file in the root folder. This project will require use of sensitive information that should not be publicly shared.
+
+5. You should now have a folder `GratShiftSaveApi` with the following structure.
     <pre>GratShiftSaveApi.Solution
     ├── .gitignore 
     ├── ... 
@@ -52,9 +55,9 @@ _Requires console application such as Git Bash, Terminal, or PowerShell_
         ├── ...
         ├── README.md</pre>
 
-3. Create a `.gitignore` file in the root folder. This project will require use of sensitive information that should not be publicly shared.
+6. Create a `.gitignore` file in the root folder. This project will require use of sensitive information that should not be publicly shared.
 
-4. Copy and paste the following information into the .gitignore file:
+7. Copy and paste the following information into the .gitignore file:
 ```text
 obj
 bin
@@ -62,7 +65,7 @@ appsettings.json
 serviceaccountkey.json
 ```
 
-5. Create two files in the following location, inside the GratShiftSaveApi folder:
+8. Create two files in the following location, inside the GratShiftSaveApi folder:
 
   * One named `appsettings.json`
   * Another named `serviceaccountkey.json`
@@ -77,7 +80,7 @@ serviceaccountkey.json
     └── <strong>serviceaccountkey.json</strong>
     └── <strong>appsettings.json</strong></pre>
 
-6. Copy and paste the text below into serviceaccountkey.json. 
+9. Copy and paste the text below into serviceaccountkey.json. 
 
 ```json
 {
@@ -94,9 +97,9 @@ serviceaccountkey.json
   "universe_domain": "googleapis.com"
 }
 ```
-7. Replace the informoration within the curly brackets with your Firebase service account private key. To generate that key you will need to:
+10. Replace the informoration within the curly brackets with your Firebase service account private key. To generate that key you will need to:
 
-    *NOTE* If you are not planning on using this Web Api with the corresponding React.js front-end the following instructions within Step 7 are not required and you may skip ahead to Step 8.
+    <strong>*NOTE*</strong> If you are not planning on using this Web Api with the corresponding React.js front-end the following instructions within Step 7 are not required and you may skip ahead to Step 8.
 
   * Set up a [Firebase account](https://firebase.google.com/)
   * Click on "Get Started", then "+ Add Project" to create a Firebase project that will hold the Firestore database and corresponding app.
@@ -112,7 +115,7 @@ serviceaccountkey.json
   ![serviceaccountkey](GratShiftSaveApi/wwwroot/img/FirestoreServiceAccountKey.png)
   * The private key will be downloaded to your local computer. Copy the information and put it into your serviceaccountkey.json file.
 
-8. Copy and paste below JSON text in appsettings.json.
+11. Copy and paste below JSON text in appsettings.json.
 
 ```json
 {
@@ -138,13 +141,13 @@ serviceaccountkey.json
 }
 ```
 
-9. Replace [YOUR-USERNAME-HERE] with your MySQL username.
+12. Replace [YOUR-USERNAME-HERE] with your MySQL username.
 
-10. Replace [YOUR-PASSWORD-HERE] with your MySQL password.
+13. Replace [YOUR-PASSWORD-HERE] with your MySQL password.
 
-11. Replace [YOUR-PROJECT-ID] with your Firestore project ID from your service account key.
+14. Replace [YOUR-PROJECT-ID] with your Firestore project ID from your service account key.
 
-12. Run the command
+15. Run the command
 
    `dotnet ef database update`
 
@@ -168,40 +171,73 @@ This program was built using _`Microsoft .NET SDK 6.0`_, and may not be compatib
 
 Explore the API endpoints in Postman or in a browser. You will not be able to utilize authentication in a browser so using Postman is recommended.
 
-#### Swagger Documentation
+### Swagger Documentation
 
 To view the Swagger documentation for the GratShiftSaveApi, launch the project using `dotnet run` using Terminal or Powershell, then input the following URL into your browser: `https://localhost:5001/swagger/index.html`
 
 ![swaggerendpoints](GratShiftSaveApi/wwwroot/img/SwaggerEndpoints.png)
 
-## Registration and Login
+### HTTP Request Structure
 
-
-
-## HTTP Request Structure
-
+If you're using `dotnet run` the following endpoints can be used via localhost:
 ```
-GET https://localhost:5001/api/GratShift/
-GET https://localhost:5001/api/GratShift/{id}
-POST https://localhost:5001/api/GratShift/
+GET https://localhost:5001/api/GratShift
+GET https://localhost:5001/api/GratShift
+GET https://localhost:5001/api/GratShift/account/{userId}
+POST https://localhost:5001/api/GratShift
 PUT https://localhost:5001/api/GratShift/{id}
 DELETE https://localhost:5001/api/GratShift/{id}
 GET https://localhost:5001/api/GratShift/page/{page}
-GET https://localhost:5001/api/GratShift/?TestAccount
+
+POST https://localhost:5001/api/register
+POST https://localhost:5001/api/register-user
+POST https://localhost:5001/api/login
 ```
+The API is also deployed via Microsoft Azure and endpoints can be explored via the following domain:
 ```
-GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/
-GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
+GET https://grat-shift-save-api.azurewebsites.net/api/GratShift
 GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/account/{userId}
-POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/
+POST https://grat-shift-save-api.azurewebsites.net/api/GratShift
 PUT https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
 DELETE https://grat-shift-save-api.azurewebsites.net/api/GratShift/{id}
 GET https://grat-shift-save-api.azurewebsites.net/api/GratShift/page/{page}
-POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/register
-POST https://grat-shift-save-api.azurewebsites.net/api/GratShift/login
+
+POST https://grat-shift-save-api.azurewebsites.net/api/register
+POST https://grat-shift-save-api.azurewebsites.net/api/register-user
+POST https://grat-shift-save-api.azurewebsites.net/api/login
 ```
 
-- To utilize the POST request and create a new instance of a GratShift, the following information is required.
+### Registration, and Login with JWT-based Authentication
+
+## Registration
+- To register a user in Postman the following structure is required for the POST request:
+```
+{
+    "Username":"TestAccount",
+    "Email": "testAccount@email.com",
+    "Password":"Password123!"
+}
+```
+![register](GratShiftSaveApi/wwwroot/img/CreateUser.png)
+
+## Login and JWT Retrieval
+
+- To login a user in Postman the previous structure in the body (that contains Username, Email, and Password data) may remain. For the login POST request ensure the endpoint is updated from "register" to "login".
+
+![login](GratShiftSaveApi/wwwroot/img/Login.png)
+
+- Before you make a GET request, copy and paste the JWT token from the body (without the quotation marks surrounding it).
+- Select the "Authorization" field and select "JWT Bearer" from the drop down menu. Paste the token string into the field in the upper body of the form.
+
+![jwtretrieval](GratShiftSaveApi/wwwroot/img/JWTAuthToken.png)
+
+- Now you are ready to create a GET request to get all available GratShift data from the database. *Note, no GratShifts have been returned in the example below becuase the database was cleared for example purposes.*
+
+![getrequest](GratShiftSaveApi/wwwroot/img/GetRequest.png)
+
+### Generating New Instance of GratShift
+
+- To utilize the POST request and create a new instance of a GratShift, the following information structure is required, while the actual information input can vary.
 
 ```
 {
@@ -227,6 +263,7 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
 
 #### Sample JSON Response
 
+For an instance of a GratShift:
 ```
 {
   "gratShiftId": 1,
@@ -236,6 +273,7 @@ https://grat-shift-save-api.azurewebsites.net/api/GratShift/1
   "shiftDate": "2023-03-01T00:00:00"
 }
 ```
+For an instance of creating a user:
 ```
 {
     "Username":"TestAccount",
